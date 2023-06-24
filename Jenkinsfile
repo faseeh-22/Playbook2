@@ -2,15 +2,16 @@ pipeline {
     agent any
 
     stages {
+        stage('Clone repository') {
+            steps {
+                git credentialsId: 'git', url: 'https://github.com/faseeh-22/Playbook2.git'
+            }
+        }
+
         stage('Run playbook') {
             steps {
-                script {
-                    sh '''
-                        ansible-playbook -b -i invent.ini nginx.yml
-                    '''
-                }
+                sh 'ansible-playbook -b -i invent.ini nginx.yml'
             }
         }
     }
 }
-
